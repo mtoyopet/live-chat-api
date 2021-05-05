@@ -225,6 +225,68 @@
       }
       </script>
       ```
+  15. CSSを`Welcome.vue`に追加
+      ```
+      /* フォームのスタイル */
+      .welcome form {
+        width: 300px;
+        margin: 20px auto;
+      }
+      .welcome label {
+        display: block;
+        margin: 20px 0 10px;
+      }
+      .welcome input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 20px;
+        border: 1px solid #eee;
+        outline: none;
+        color: #999;
+        margin: 10px auto;
+      }
+      .welcome span{
+        font-weight: bold;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      .welcome button {
+        margin: 20px auto;
+      }
+      ```
+ 
+ **ログインページの作成**
+ 
+ 16. `LoginForm.vue`を`components/`に追加
+ 17. `LoginForm`に実装
+     ```
+        <template>
+          <h2>ログイン</h2>
+          <form @submit.prevent="handleSubmit">
+            <input type="email" required placeholder="メールアドレス" v-model="email">
+            <input type="password" required placeholder="パスワード" v-model="password">
+            <button>登録する</button>    
+          </form>
+        </template>
+
+        <script>
+        import { ref } from 'vue'
+
+        export default {
+          setup() {
+            const email = ref('')
+            const password = ref('')
+
+            const handleSubmit = () => {
+              console.log({ email, password })
+            }
+
+            return { email, password, handleSubmit }
+          }
+        }
+        </script>
+     ```
+ 
  
      
    
