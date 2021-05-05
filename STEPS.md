@@ -1,4 +1,4 @@
-## STEPS
+## STEP1
 
 ### 1. Railsプロジェクトを作成する
 
@@ -122,3 +122,6 @@
 
 13. `bundle exec rails s`でサーバを起動
 14. Create / SignIn / Change Password
+
+## STEP2: Vueアプリの作成
+
