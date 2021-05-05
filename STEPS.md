@@ -125,6 +125,8 @@
 
 ## STEP2: Vueアプリの作成
 
+**アプリの作成**
+
 1. `vue create live-chat-front`
    ```
    Vue CLI v4.5.12
@@ -135,8 +137,8 @@
     ? Where do you prefer placing config for Babel, ESLint, etc.? In package.json
     ? Save this as a preset for future projects? No
    ```
-2. `cd live-chat-front`
-3. `npm run serve`
+2. `cd live-chat-front`、`npm run serve`
+3. VueプロジェクトがVer3か確認する
 4. `HelloWorld.vue`、`About.vue`、`Home.vue`を削除
 5. `App.vue`を下記に変更
     ```
@@ -145,5 +147,29 @@
     </template>
     ```
 6. `router/index.js`
-    - routesないを削除して`const routes = []`に変更
+    - routes内を削除して`const routes = []`に変更
     - `import Home from '../views/Home.vue'`を削除
+
+**Welcomeページの作成**
+7. `Welcome.vue`を`view`内に作成
+8. `Welcome.vue`を編集
+    ```
+    <template>
+      <div>
+        Welcome!!!!
+      </div>
+    </template>
+    ```
+9. `router/index.js`にwelcomeを登録
+    ```
+    import Welcome from '../views/Welcome'
+
+    const routes = [
+      {
+        path: '/',
+        name: 'Welcome',
+        component: Welcome
+      }
+    ]
+    ```
+   
