@@ -151,6 +151,7 @@
     - `import Home from '../views/Home.vue'`を削除
 
 **Welcomeページの作成**
+
 7. `Welcome.vue`を`view`内に作成
 8. `Welcome.vue`を編集
     ```
