@@ -1,4 +1,4 @@
-## STEP1
+## STEP1: Railsアプリの作成
 
 ### 1. Railsプロジェクトを作成する
 
@@ -125,3 +125,25 @@
 
 ## STEP2: Vueアプリの作成
 
+1. `vue create live-chat-front`
+   ```
+   Vue CLI v4.5.12
+    ? Please pick a preset: Manually select features
+    ? Check the features needed for your project: Choose Vue version, Babel, Router
+    ? Choose a version of Vue.js that you want to start the project with 3.x (Preview)
+    ? Use history mode for router? (Requires proper server setup for index fallback in production) Yes
+    ? Where do you prefer placing config for Babel, ESLint, etc.? In package.json
+    ? Save this as a preset for future projects? No
+   ```
+2. `cd live-chat-front`
+3. `npm run serve`
+4. `HelloWorld.vue`、`About.vue`、`Home.vue`を削除
+5. `App.vue`を下記に変更
+    ```
+    <template>
+      <router-view/>
+    </template>
+    ```
+6. `router/index.js`
+    - routesないを削除して`const routes = []`に変更
+    - `import Home from '../views/Home.vue'`を削除
