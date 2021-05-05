@@ -8,7 +8,7 @@
 2. Gemファイルで`gem "rails"`を`gem 'rails', '~> 6.0.0'`に変更
 3. `bundle install --path vendor/bundle`
 4. Railsアプリを作成 `bundle exec rails new . --api`
-  - `Overwrite /Users/mtoyopet/code/personal-project/2021/techpit/live-chat-api/Gemfile?` は`Y`を選択
+    - `Overwrite /Users/mtoyopet/code/personal-project/2021/techpit/live-chat-api/Gemfile?` は`Y`を選択
 
 ### 2. ログイン機能を実装する
 
@@ -154,13 +154,26 @@
 
 7. `Welcome.vue`を`view`内に作成
 8. `Welcome.vue`を編集
-    ```
-    <template>
-      <div>
-        Welcome!!!!
-      </div>
-    </template>
-    ```
+      ```
+      <template>
+        <div class="container welcome">
+          <p>Welcome!!!!</p>
+        </div>
+      </template>
+
+      <script>
+      export default {
+
+      }
+      </script>
+
+      <style scoped>
+        .welcome {
+          text-align: center;
+          padding: 20px 0;
+        }
+      </style>
+      ```
 9. `router/index.js`にwelcomeを登録
     ```
     import Welcome from '../views/Welcome'
@@ -173,4 +186,45 @@
       }
     ]
     ```
+10. main.cssを`/assets`に追加
+11. main.cssを`Main.js`でimportする
+   
+ **サインアップページの作成**
+ 
+ 12. `/components`配下に`SignupForm.vue`を作成する
+ 13. `Welcome`ページで`SignupForm.vue`をimportする
+ 14. `SignupForm.vue`の修正
+      ```
+      <template>
+        <h2>アカウントを登録</h2>
+        <form @submit.prevent="handleSubmit">
+          <input type="text" required placeholder="名前" v-model="name">
+          <input type="email" required placeholder="メールアドレス" v-model="email">
+          <input type="password" required placeholder="パスワード" v-model="password">
+          <input type="password" required placeholder="パスワード（確認用）" v-model="passwordConfirmation">
+          <button>登録する</button>    
+        </form>
+      </template>
+
+      <script>
+      import { ref } from 'vue'
+
+      export default {
+        setup() {
+          const name = ref('')
+          const email = ref('')
+          const password = ref('')
+          const passwordConfirmation = ref('')
+
+          const handleSubmit = () => {
+            console.log({ name, email, password, passwordConfirmation })
+          }
+
+          return { name, email, password, passwordConfirmation, handleSubmit }
+        }
+      }
+      </script>
+      ```
+ 
+     
    
