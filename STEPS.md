@@ -286,7 +286,64 @@
         }
         </script>
      ```
- 
+
+**チャレンジ**
+
+ログインとサインインフォームの切り替えを行う
+
+18. v-ifを入れて画面の切り替えを行う
+    ```
+    <template>
+      <div class="container welcome">
+        <p>ようこそ</p>
+        <div v-if="shouldShowLoginForm">
+          <login-form />
+          <p>アカウントがありませんか？アカウント登録は<span @click="shouldShowLoginForm = false">こちら</span>をクリック</p>
+        </div>
+        <div v-if="!shouldShowLoginForm">
+          <signup-form />
+          <p>アカウントをお持ちですか？ログインは<span @click="shouldShowLoginForm = true">こちら</span>をクリック</p>
+        </div>
+      </div>
+    </template>
+
+    <script>
+    import LoginForm from '../components/LoginForm.vue'
+    import SignupForm from "../components/SignupForm.vue"
+    import { ref } from 'vue'
+
+    export default  {
+      components: { SignupForm, LoginForm },
+      setup() {
+        const shouldShowLoginForm = ref(true)
+
+        return { shouldShowLoginForm }
+      }
+    }
+    </script>    
+    ```
+
+
+## STEP3: ログインの実装
+参考： [How do i use this with vue](https://github.com/lynndylanhurley/devise_token_auth/issues/844)
+
+19. axiosをインストール `npm install axios vue-axios`
+    - [公式ドキュメント](https://www.npmjs.com/package/vue-axios)
+20. `main.js`を書き換える
+    ```
+    import { createApp } from 'vue'
+    import App from './App.vue'
+    import router from './router'
+    import axios from 'axios'
+    import VueAxios from 'vue-axios'
+
+    import './assets/main.css'
+
+    const app = createApp(App).use(router).mount('#app')
+    app.use(VueAxios, axios)
+    ```
+ 21. `SignupForm.vue`にaxiosをインポートしてRailsとつなげる。Headersをconsole.logして必要なAuthデータが返ってくることを確かめる
+ 22. 
  
      
    
