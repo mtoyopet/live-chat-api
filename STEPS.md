@@ -189,7 +189,7 @@
 10. main.cssを`/assets`に追加
 11. main.cssを`Main.js`でimportする
    
- **サインアップページの作成**
+ **サインアップとログインページの作成**
  
  12. `/components`配下に`SignupForm.vue`を作成する
  13. `Welcome`ページで`SignupForm.vue`をimportする
@@ -324,7 +324,7 @@
     ```
 
 
-## STEP3: ログインの実装
+## STEP3: サインアップ機能の実装
 参考： [How do i use this with vue](https://github.com/lynndylanhurley/devise_token_auth/issues/844)
 
 19. axiosをインストール `npm install axios vue-axios`
@@ -343,7 +343,13 @@
     app.use(VueAxios, axios)
     ```
  21. `SignupForm.vue`にaxiosをインポートしてRailsとつなげる。Headersをconsole.logして必要なAuthデータが返ってくることを確かめる
- 22. 
+ 22. `composables`ディレクトリを作って、`useSignup.js`にサインアップメソッドを移動させる（いらないかも）
+ 23. アカウント登録に失敗した場合のエラーメッセージを表示する
  
-     
+
+## STEP4: ログイン機能の実装
+
+24. `composables/`に`useLogin.js`を作成、`useSignin.js`をコピペして内容を書き換える
+25. `LoginForm.vue`を書き換え、ログインのテスト。ヘッダーが返ってくることをconsole.logして確かめる
+26. ログインに失敗した場合のエラーメッセージを表示する
    
