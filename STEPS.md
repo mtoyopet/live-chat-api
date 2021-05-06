@@ -352,4 +352,12 @@
 24. `composables/`に`useLogin.js`を作成、`useSignin.js`をコピペして内容を書き換える
 25. `LoginForm.vue`を書き換え、ログインのテスト。ヘッダーが返ってくることをconsole.logして確かめる
 26. ログインに失敗した場合のエラーメッセージを表示する
+
+
+## STEP5: サインインとログイン成功時にリダイレクトさせる
+
+27. `views/`に`Chatroom.vue`を作成する
+28. `router/index.js`にチャットルームを作成し、アクセスできるか確認する
+29. `LoginForm.vue`と`Welcome.vue`にemitイベントを追加。リダイレクトするか確認する
+30. `SignupForm.vue`と`Welcome.vue`にemitイベントを追加。リダイレクトするか確認する
    
