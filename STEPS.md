@@ -265,7 +265,7 @@
           <form @submit.prevent="handleSubmit">
             <input type="email" required placeholder="メールアドレス" v-model="email">
             <input type="password" required placeholder="パスワード" v-model="password">
-            <button>登録する</button>    
+            <button>ログインする</button>    
           </form>
         </template>
 
