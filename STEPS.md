@@ -432,7 +432,128 @@
 47. ログインしている場合、していない場合でページに入れる・入れないことを確認する
 
 
-## STEP6: チャット機能を実装する
+## STEP6: チャット機能の実装：一覧表示
 
+- 参考: [RailsのAction CableとWebpackerとVue.jsを使ってチャットを作成してみる](http://c5meru.hatenablog.jp/entry/2018/10/16/230000)
+
+**モデルの作成**
+48. `bundle exec rails g model message`でモデルを作成
+49. migrationファイルを作成
+50. MessageモデルとUserモデルにリレーションを追加
+51. Messageモデルにvalidationを追加
+52. `bundle exec rails db:migrate`
+    ```
+    == 20210507042335 CreateMessages: migrating ===================================
+    -- create_table(:messages)
+       -> 0.0111s
+    == 20210507042335 CreateMessages: migrated (0.0122s) ==========================
+    ```
+
+**コントローラとビューを作成**
+
+53. `bundle exec rails g controller messages`
+    ```
+    Running via Spring preloader in process 73257
+      create  app/controllers/messages_controller.rb
+      invoke  test_unit
+      create    test/controllers/messages_controller_test.rb
+    ```
+54. indexメソッドを作成
+55. POSTMANでテストする。空の配列が返ってくる
+56. seeds.rbを作り、`bundle exec rails db:seed`
+    ```
+    0番目のメッセージを作成しました
+    1番目のメッセージを作成しました
+    2番目のメッセージを作成しました
+    メッセージを作成が完了しました
+    ```
+57. もう一度Postmanでテストして配列データが返ってくることを確認する
+58. user_nameが入っていないので、配列を作り直す。user_nameが入っていることを確認する
+
+**ログインしていないとメッセージを受け取れないようにする**
+59. `before_action :authenticate_user!`を追加し、Postmanで確認する
+60. ヘッダーにauth情報を入れてもう一度リクエストする
+
+**メッセージを表示する**
+61. `ChatWindow.vue`を作成し、getMessagesメソッドを実装する。
+62. `ChatRoom.vue`にimportし、データが表示されることを確認する
+63. CSSを追加して見た目を整える
+
+
+## STEP7: チャット機能の実装： メッセージの作成
+
+- 参考： [Rails(ActionCable)とNuxt.jsでチャットアプリを作ってみる](https://qiita.com/daitasu/items/d018fba8d3daa51ecf51)
+
+**Action Cableの作成**
+
+64. `bundle exec rails g channel post speak`
+    ```
+    Running via Spring preloader in process 79728
+      invoke  test_unit
+      create    test/channels/post_channel_test.rb
+      create  app/channels/post_channel.rb
+    ```
+65. `room_channel.rb`を書き換える
+    ```
+    class RoomChannel < ApplicationCable::Channel
+      def subscribed
+        stream_from 'room_channel'
+      end
+
+      def unsubscribed
+        # Any cleanup needed when channel is unsubscribed
+      end
+
+      def receive(data)
+          ActionCable.server.broadcast 'room_channel', message: data['message'], name: user.name, created_at: message.created_at
+      end
+    end
+    ```
+66. ` npm install -g wscat`でインストール
+67. `config/initializers`に`action_cable.rb`を作成し、`ActionCable.server.config.disable_request_forgery_protection = true`を追加する
+68. Railsサーバーを立ち上げて、`wscat -c ws://localhost:3000/cable`が動くかテストする
+ 
+
+**フロント側の実装**
+
+- 参考: [Creating a Chat Using Rails' Action Cable](https://www.pluralsight.com/guides/creating-a-chat-using-rails-action-cable)
+
+69. `NewChatForm.vue`を作成し、ChatRoom.vueにimportする
+70. CSSを適用する
+71. `npm install actioncable-vue --save`
+72. `main.js`にaction cableの設定を追加する
+73. ActionCableのメソッドを実装する
+74. receivedでalertが出るか確認する
+
+**メッセージをDBに保存する**
+
+75. RailsのReceiveメソッドを書き換える
+    ```
+      def receive(data)
+        user = User.find_by(email: data['uid'])
+
+        if message = Message.create(content: data['message'], user_id: user.id)
+          ActionCable.server.broadcast 'room_channel', message: data['message'], name: user.name, created_at: message.created_at
+        end
+      end
+    ```
+76. メッセージを送って、リロードするとメッセージが表示されることを確認する
+77. `NewChatForm.vue`のgetMessagesを親コンポーネントの`ChatRoom.vue`に移動し、messagesをpropsで渡す
+78. チャットを送る度にメッセージが追加されることを確認する
+
+**サブスクライブを削除する**
+79. beforeDestoryでchannelをunsubscribeする
+
+## STEP8: 最終調整
+
+**Dateフォーマットを整える**
+80. `npm install date-fns --save`
+81. `Chatroom.vue`にformattedMessagesのcomputedを定義、formattedMessagesをpropsで渡す
+82. 英語で表示されることを確認する
+83. localeを追加して日本語表記にする
+
+**スクロールする**
+
+84. `ChatWindow.vue`にupdatedメソッドを追加する
 
  
