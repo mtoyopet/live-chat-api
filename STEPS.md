@@ -360,4 +360,59 @@
 28. `router/index.js`にチャットルームを作成し、アクセスできるか確認する
 29. `LoginForm.vue`と`Welcome.vue`にemitイベントを追加。リダイレクトするか確認する
 30. `SignupForm.vue`と`Welcome.vue`にemitイベントを追加。リダイレクトするか確認する
-   
+
+
+## STEP6: Auth情報を保存する
+31. `window.localStorage.setItem`を用いて、auth情報をローカルストレージに保存するメソッドを`useLogin.js`に追加する
+32. localstorageに保存されていることを確認する
+33. nameはbodyにあるので、bodyからとる
+34. `useSignin.js`にも同じ実装をする。localStorageが上書きされることを確かめる
+35. `auth/setItem.js`を作って、localStorage系のメソッドを共通化する。`useLogin.js`と`useSignin.js`でimportする
+
+## STEP6: ナビバーを作成する
+
+36. `components/`に`Navbar.vue`を作成して下記を作成
+    ```
+    <template>
+      <nav>
+        <div>
+          <p>こんにちは、XXさん</p>
+          <p class="email">現在、....@...comでログイン中です</p>
+        </div>
+        <button>ログアウト</button>
+      </nav>
+    </template>
+
+    <script>
+    export default {
+
+    }
+    </script>
+
+
+    <style scoped>
+      nav {
+        padding: 20px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      nav p {
+        margin: 2px auto;
+        font-size: 16px;
+        color: #444;
+      }
+      nav p.email {
+        font-size: 14px;
+        color: #999;
+      }
+    </style>
+    ```
+37. Chatroom.vueでimportする
+38. localStorageから名前とメールアドレスを取り出しNavbarに表示させる
+
+
+## STEP7: ログアウト機能を実装する
+40. 
+ 
