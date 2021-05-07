@@ -79,8 +79,6 @@ GEM
       activesupport (>= 4.2.0)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
-    jbuilder (2.11.2)
-      activesupport (>= 5.0.0)
     listen (3.5.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -170,7 +168,6 @@ DEPENDENCIES
   byebug
   devise (~> 4.2)
   devise_token_auth (~> 1.1, >= 1.1.5)
-  jbuilder (~> 2.7)
   listen (~> 3.2)
   puma (~> 4.1)
   rack-cors (~> 1.1, >= 1.1.1)
