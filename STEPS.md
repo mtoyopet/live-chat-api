@@ -369,6 +369,7 @@
 34. `useSignin.js`にも同じ実装をする。localStorageが上書きされることを確かめる
 35. `auth/setItem.js`を作って、localStorage系のメソッドを共通化する。`useLogin.js`と`useSignin.js`でimportする
 
+
 ## STEP6: ナビバーを作成する
 
 36. `components/`に`Navbar.vue`を作成して下記を作成
@@ -419,5 +420,17 @@
 41. `Navbar.vue`に`useLogout.js`をimportする
 42. `handleClick`でメソッドを動かして、ログアウトされることを確認する。localStorageも空になっていることを確認する
 43. ログアウトした時に、Welcomeにリダイレクトされるようにemitイベントを実装する
+
+
+## STEP8: ルートガードを設定する
+
+44. `router/index.js`に`requireNoAuth`と`requireAuth`メソッドを追加する
+45. `auth/`にvalidateメソッドを追加する
+46. consoleでエラーが出ているはずなので、localstorageのuidがnilの場合は、`validate`メソッドは動かないように分岐を入れる
+47. ログインしている場合、していない場合でページに入れる・入れないことを確認する
+
+
+### 3. チャット機能を実装する
+
 
  
