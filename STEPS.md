@@ -14,7 +14,7 @@
 
 参考: [Rails6.0とdevice_token_auth でトークンベースで認証を実装する](https://qiita.com/mtoyopet/items/076b623ac72f4f83c5f6)
 
-**Deviseとdevise token authの導入**
+### Deviseとdevise token authの導入
 
 1. deviseとdevise_token_authをGemfileに追加。rubygems.orgから最新を追加すること
 2. `bundle install`、`bundle exec rails g devise:install`を実行
@@ -85,12 +85,12 @@
 6. `config/initializers/devise_token_auth.rb`を開き、[ここの通り](https://qiita.com/mtoyopet/items/076b623ac72f4f83c5f6#1devise_token_authrb%E3%81%AE%E8%A8%AD%E5%AE%9A)設定する
 7. `application_controller.rb`に`include DeviseTokenAuth::Concerns::SetUserByToken`があるか確認する
 
-**CORSの設定**
+### CORSの設定
 
 8. `rack-cors`をGemfileに追加し、`bundle install`
 9. `config/application.rb`に[この設定](https://qiita.com/mtoyopet/items/076b623ac72f4f83c5f6#3applicationrb%E3%81%AE%E8%A8%AD%E5%AE%9A)を追加する
 
-**ルートの設定**
+### ルートの設定
 
 10. `routes.rb`を開き、下記をごっそりコピペする
   - `DeviseTokenAuth::RegistrationsController`クラスを継承
@@ -107,7 +107,7 @@
     end
     ```
 
-**コントローラの設定**
+### コントローラの設定
 
 11. `bundle exec rails g controller auth/registrations`を実行する
     ```
@@ -118,14 +118,14 @@
     ```
 12. `controllers/auth/registrations_controller.rb`にsign_up_paramsを追加
 
-**POSTMANでテスト**
+### POSTMANでテスト
 
 13. `bundle exec rails s`でサーバを起動
 14. Create / SignIn / Change Password
 
 ## STEP2: Vueアプリの作成
 
-**アプリの作成**
+### アプリの作成
 
 1. `vue create live-chat-front`
    ```
@@ -150,7 +150,7 @@
     - routes内を削除して`const routes = []`に変更
     - `import Home from '../views/Home.vue'`を削除
 
-**Welcomeページの作成**
+### Welcomeページの作成
 
 7. `Welcome.vue`を`view`内に作成
 8. `Welcome.vue`を編集
@@ -189,20 +189,83 @@
 10. main.cssを`/assets`に追加
 11. main.cssを`Main.js`でimportする
    
- **サインアップとログインページの作成**
+### サインアップとログインページの作成
  
- 12. `/components`配下に`SignupForm.vue`を作成する
- 13. `Welcome`ページで`SignupForm.vue`をimportする
- 14. `SignupForm.vue`の修正
-      ```
+12. `/components`配下に`SignupForm.vue`を作成する
+13. `Welcome`ページで`SignupForm.vue`をimportする
+14. `SignupForm.vue`の修正
+    ```
+    <template>
+      <h2>アカウントを登録</h2>
+      <form @submit.prevent="handleSubmit">
+        <input type="text" required placeholder="名前" v-model="name">
+        <input type="email" required placeholder="メールアドレス" v-model="email">
+        <input type="password" required placeholder="パスワード" v-model="password">
+        <input type="password" required placeholder="パスワード（確認用）" v-model="passwordConfirmation">
+        <button>登録する</button>    
+      </form>
+    </template>
+
+    <script>
+    import { ref } from 'vue'
+
+    export default {
+      setup() {
+        const name = ref('')
+        const email = ref('')
+        const password = ref('')
+        const passwordConfirmation = ref('')
+
+        const handleSubmit = () => {
+          console.log({ name, email, password, passwordConfirmation })
+        }
+
+        return { name, email, password, passwordConfirmation, handleSubmit }
+      }
+    }
+    </script>
+    ```
+15. CSSを`Welcome.vue`に追加
+    ```
+    /* フォームのスタイル */
+    .welcome form {
+      width: 300px;
+      margin: 20px auto;
+    }
+    .welcome label {
+      display: block;
+      margin: 20px 0 10px;
+    }
+    .welcome input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 20px;
+      border: 1px solid #eee;
+      outline: none;
+      color: #999;
+      margin: 10px auto;
+    }
+    .welcome span{
+      font-weight: bold;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .welcome button {
+      margin: 20px auto;
+    }
+    ```
+ 
+### ログインページの作成
+ 
+16. `LoginForm.vue`を`components/`に追加
+17. `LoginForm`に実装
+    ```
       <template>
-        <h2>アカウントを登録</h2>
+        <h2>ログイン</h2>
         <form @submit.prevent="handleSubmit">
-          <input type="text" required placeholder="名前" v-model="name">
           <input type="email" required placeholder="メールアドレス" v-model="email">
           <input type="password" required placeholder="パスワード" v-model="password">
-          <input type="password" required placeholder="パスワード（確認用）" v-model="passwordConfirmation">
-          <button>登録する</button>    
+          <button>ログインする</button>    
         </form>
       </template>
 
@@ -211,85 +274,20 @@
 
       export default {
         setup() {
-          const name = ref('')
           const email = ref('')
           const password = ref('')
-          const passwordConfirmation = ref('')
 
           const handleSubmit = () => {
-            console.log({ name, email, password, passwordConfirmation })
+            console.log({ email, password })
           }
 
-          return { name, email, password, passwordConfirmation, handleSubmit }
+          return { email, password, handleSubmit }
         }
       }
       </script>
-      ```
-  15. CSSを`Welcome.vue`に追加
-      ```
-      /* フォームのスタイル */
-      .welcome form {
-        width: 300px;
-        margin: 20px auto;
-      }
-      .welcome label {
-        display: block;
-        margin: 20px 0 10px;
-      }
-      .welcome input {
-        width: 100%;
-        padding: 10px;
-        border-radius: 20px;
-        border: 1px solid #eee;
-        outline: none;
-        color: #999;
-        margin: 10px auto;
-      }
-      .welcome span{
-        font-weight: bold;
-        text-decoration: underline;
-        cursor: pointer;
-      }
-      .welcome button {
-        margin: 20px auto;
-      }
-      ```
- 
- **ログインページの作成**
- 
- 16. `LoginForm.vue`を`components/`に追加
- 17. `LoginForm`に実装
-     ```
-        <template>
-          <h2>ログイン</h2>
-          <form @submit.prevent="handleSubmit">
-            <input type="email" required placeholder="メールアドレス" v-model="email">
-            <input type="password" required placeholder="パスワード" v-model="password">
-            <button>ログインする</button>    
-          </form>
-        </template>
+    ```
 
-        <script>
-        import { ref } from 'vue'
-
-        export default {
-          setup() {
-            const email = ref('')
-            const password = ref('')
-
-            const handleSubmit = () => {
-              console.log({ email, password })
-            }
-
-            return { email, password, handleSubmit }
-          }
-        }
-        </script>
-     ```
-
-**チャレンジ**
-
-ログインとサインインフォームの切り替えを行う
+### ログインとサインインフォームの切り替えを行う
 
 18. v-ifを入れて画面の切り替えを行う
     ```
@@ -347,14 +345,14 @@
  23. アカウント登録に失敗した場合のエラーメッセージを表示する
  
 
-**ログイン機能の実装**
+### ログイン機能の実装
 
 24. `composables/`に`useLogin.js`を作成、`useSignin.js`をコピペして内容を書き換える
 25. `LoginForm.vue`を書き換え、ログインのテスト。ヘッダーが返ってくることをconsole.logして確かめる
 26. ログインに失敗した場合のエラーメッセージを表示する
 
 
-**サインインとログイン成功時にリダイレクトさせる**
+### サインインとログイン成功時にリダイレクトさせる
 
 27. `views/`に`Chatroom.vue`を作成する
 28. `router/index.js`にチャットルームを作成し、アクセスできるか確認する
@@ -362,7 +360,7 @@
 30. `SignupForm.vue`と`Welcome.vue`にemitイベントを追加。リダイレクトするか確認する
 
 
-**Auth情報を保存する**
+### Auth情報を保存する
 
 31. `window.localStorage.setItem`を用いて、auth情報をローカルストレージに保存するメソッドを`useLogin.js`に追加する
 32. localstorageに保存されていることを確認する
@@ -373,7 +371,7 @@
 
 ## STEP4: ログアウト機能の実装
 
-**ナビバーの作成**
+### ナビバーの作成
 
 36. `components/`に`Navbar.vue`を作成して下記を作成
     ```
@@ -416,7 +414,7 @@
 37. Chatroom.vueでimportする
 38. localStorageから名前とメールアドレスを取り出しNavbarに表示させる
 
-**ログアウトロジックの実装**
+### ログアウトロジックの実装
 
 40. `composables/useLogout.js`を作成しロジックを書く
 41. `Navbar.vue`に`useLogout.js`をimportする
@@ -436,7 +434,7 @@
 
 - 参考: [RailsのAction CableとWebpackerとVue.jsを使ってチャットを作成してみる](http://c5meru.hatenablog.jp/entry/2018/10/16/230000)
 
-**モデルの作成**
+### モデルの作成
 
 48. `bundle exec rails g model message`でモデルを作成
 49. migrationファイルを作成
@@ -450,7 +448,7 @@
     == 20210507042335 CreateMessages: migrated (0.0122s) ==========================
     ```
 
-**コントローラとビューを作成**
+### コントローラとビューを作成
 
 53. `bundle exec rails g controller messages`
     ```
@@ -471,12 +469,13 @@
 57. もう一度Postmanでテストして配列データが返ってくることを確認する
 58. user_nameが入っていないので、配列を作り直す。user_nameが入っていることを確認する
 
-**ログインしていないとメッセージを受け取れないようにする**
+### ログインしていないとメッセージを受け取れないようにする
 
 59. `before_action :authenticate_user!`を追加し、Postmanで確認する
 60. ヘッダーにauth情報を入れてもう一度リクエストする
 
-**メッセージを表示する**
+### メッセージを表示する
+
 61. `ChatWindow.vue`を作成し、getMessagesメソッドを実装する。
 62. `ChatRoom.vue`にimportし、データが表示されることを確認する
 63. CSSを追加して見た目を整える
@@ -486,7 +485,7 @@
 
 - 参考： [Rails(ActionCable)とNuxt.jsでチャットアプリを作ってみる](https://qiita.com/daitasu/items/d018fba8d3daa51ecf51)
 
-**Action Cableの作成**
+### Action Cableの作成
 
 64. `bundle exec rails g channel post speak`
     ```
@@ -516,7 +515,7 @@
 68. Railsサーバーを立ち上げて、`wscat -c ws://localhost:3000/cable`が動くかテストする
  
 
-**フロント側の実装**
+### フロント側の実装
 
 - 参考: [Creating a Chat Using Rails' Action Cable](https://www.pluralsight.com/guides/creating-a-chat-using-rails-action-cable)
 
@@ -527,7 +526,7 @@
 73. ActionCableのメソッドを実装する
 74. receivedでalertが出るか確認する
 
-**メッセージをDBに保存する**
+### メッセージをDBに保存する
 
 75. RailsのReceiveメソッドを書き換える
     ```
@@ -543,20 +542,20 @@
 77. `NewChatForm.vue`のgetMessagesを親コンポーネントの`ChatRoom.vue`に移動し、messagesをpropsで渡す
 78. チャットを送る度にメッセージが追加されることを確認する
 
-**サブスクライブを削除する**
 
+### サブスクライブを削除する
 79. beforeDestoryでchannelをunsubscribeする
 
 ## STEP8: 最終調整
 
-**Dateフォーマットを整える**
+### Dateフォーマットを整える
 
 80. `npm install date-fns --save`
 81. `Chatroom.vue`にformattedMessagesのcomputedを定義、formattedMessagesをpropsで渡す
 82. 英語で表示されることを確認する
 83. localeを追加して日本語表記にする
 
-**スクロールする**
+### スクロールする
 
 84. `ChatWindow.vue`にupdatedメソッドを追加する
 
