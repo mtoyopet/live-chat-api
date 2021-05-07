@@ -324,7 +324,7 @@
     ```
 
 
-## STEP3: サインアップ機能の実装
+## STEP3: サインアップとログイン機能の実装
 参考： [How do i use this with vue](https://github.com/lynndylanhurley/devise_token_auth/issues/844)
 
 19. axiosをインストール `npm install axios vue-axios`
@@ -347,14 +347,14 @@
  23. アカウント登録に失敗した場合のエラーメッセージを表示する
  
 
-## STEP4: ログイン機能の実装
+**ログイン機能の実装**
 
 24. `composables/`に`useLogin.js`を作成、`useSignin.js`をコピペして内容を書き換える
 25. `LoginForm.vue`を書き換え、ログインのテスト。ヘッダーが返ってくることをconsole.logして確かめる
 26. ログインに失敗した場合のエラーメッセージを表示する
 
 
-## STEP5: サインインとログイン成功時にリダイレクトさせる
+**サインインとログイン成功時にリダイレクトさせる**
 
 27. `views/`に`Chatroom.vue`を作成する
 28. `router/index.js`にチャットルームを作成し、アクセスできるか確認する
@@ -362,7 +362,8 @@
 30. `SignupForm.vue`と`Welcome.vue`にemitイベントを追加。リダイレクトするか確認する
 
 
-## STEP6: Auth情報を保存する
+**Auth情報を保存する**
+
 31. `window.localStorage.setItem`を用いて、auth情報をローカルストレージに保存するメソッドを`useLogin.js`に追加する
 32. localstorageに保存されていることを確認する
 33. nameはbodyにあるので、bodyからとる
@@ -370,7 +371,9 @@
 35. `auth/setItem.js`を作って、localStorage系のメソッドを共通化する。`useLogin.js`と`useSignin.js`でimportする
 
 
-## STEP6: ナビバーを作成する
+## STEP4: ログアウト機能の実装
+
+**ナビバーの作成**
 
 36. `components/`に`Navbar.vue`を作成して下記を作成
     ```
@@ -413,8 +416,7 @@
 37. Chatroom.vueでimportする
 38. localStorageから名前とメールアドレスを取り出しNavbarに表示させる
 
-
-## STEP7: ログアウト機能を実装する
+**ログアウトロジックの実装**
 
 40. `composables/useLogout.js`を作成しロジックを書く
 41. `Navbar.vue`に`useLogout.js`をimportする
@@ -422,7 +424,7 @@
 43. ログアウトした時に、Welcomeにリダイレクトされるようにemitイベントを実装する
 
 
-## STEP8: ルートガードを設定する
+## STEP5: ルートガードを設定する
 
 44. `router/index.js`に`requireNoAuth`と`requireAuth`メソッドを追加する
 45. `auth/`にvalidateメソッドを追加する
@@ -430,7 +432,7 @@
 47. ログインしている場合、していない場合でページに入れる・入れないことを確認する
 
 
-### 3. チャット機能を実装する
+### STEP6: チャット機能を実装する
 
 
  
