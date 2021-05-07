@@ -414,5 +414,10 @@
 
 
 ## STEP7: ログアウト機能を実装する
-40. 
+
+40. `composables/useLogout.js`を作成しロジックを書く
+41. `Navbar.vue`に`useLogout.js`をimportする
+42. `handleClick`でメソッドを動かして、ログアウトされることを確認する。localStorageも空になっていることを確認する
+43. ログアウトした時に、Welcomeにリダイレクトされるようにemitイベントを実装する
+
  
