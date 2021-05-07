@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    messages = Message.includes(:user).all
+    messages = Message.includes(:user)
     mesages_array = messages.map do |message|
       {
         id: message.id,
