@@ -1,8 +1,11 @@
 class MessagesController < ApplicationController
+  before_action :authenticate_user!
+
   def index
-    @messages = Message.includes(:user).all
-    mesages_array = @messages.map do |message|
+    messages = Message.includes(:user).all
+    mesages_array = messages.map do |message|
       {
+        id: message.id,
         user_id: message.user.id,
         name: message.user.name,
         content: message.content,
