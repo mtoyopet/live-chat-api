@@ -1,6 +1,6 @@
 ## STEP1: Railsアプリの作成
 
-### 1. Railsプロジェクトを作成する
+### Railsプロジェクトを作成する
 
 参考: [新規Railsプロジェクトの作成手順まとめ](https://qiita.com/yuitnnn/items/b45bba658d86eabdbb26)
 
@@ -10,7 +10,7 @@
 4. Railsアプリを作成 `bundle exec rails new . --api`
     - `Overwrite /Users/mtoyopet/code/personal-project/2021/techpit/live-chat-api/Gemfile?` は`Y`を選択
 
-### 2. ログイン機能を実装する
+### ログイン機能を実装する
 
 参考: [Rails6.0とdevice_token_auth でトークンベースで認証を実装する](https://qiita.com/mtoyopet/items/076b623ac72f4f83c5f6)
 
@@ -432,7 +432,7 @@
 47. ログインしている場合、していない場合でページに入れる・入れないことを確認する
 
 
-### STEP6: チャット機能を実装する
+## STEP6: チャット機能を実装する
 
 
  
