@@ -435,6 +435,7 @@
 - 参考: [RailsのAction CableとWebpackerとVue.jsを使ってチャットを作成してみる](http://c5meru.hatenablog.jp/entry/2018/10/16/230000)
 
 ### モデルの作成
+
 48. `bundle exec rails g model message`でモデルを作成
 49. migrationファイルを作成
 50. MessageモデルとUserモデルにリレーションを追加
@@ -541,12 +542,14 @@
 77. `NewChatForm.vue`のgetMessagesを親コンポーネントの`ChatRoom.vue`に移動し、messagesをpropsで渡す
 78. チャットを送る度にメッセージが追加されることを確認する
 
+
 ### サブスクライブを削除する
 79. beforeDestoryでchannelをunsubscribeする
 
 ## STEP8: 最終調整
 
 ### Dateフォーマットを整える
+
 80. `npm install date-fns --save`
 81. `Chatroom.vue`にformattedMessagesのcomputedを定義、formattedMessagesをpropsで渡す
 82. 英語で表示されることを確認する
