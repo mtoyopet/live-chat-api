@@ -1,9 +1,5 @@
 class Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
 
-  def create
-    super
-  end
-
   private
 
   def sign_up_params
