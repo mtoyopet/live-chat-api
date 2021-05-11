@@ -9,6 +9,7 @@ class MessagesController < ApplicationController
         user_id: message.user.id,
         name: message.user.name,
         content: message.content,
+        email: message.user.uid,
         created_at: message.created_at
       }
     end
